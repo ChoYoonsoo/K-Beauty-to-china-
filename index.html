@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="CN">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>K-Beauty 뷰티데이 예약</title>
+<title>K-Beauty 美妆日预约</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* 전역 테마 및 안전 영역(safe-area) 스타일 */
 :root{
   --bg:#fdf7f9;
   --card:#ffffff;
@@ -62,7 +63,7 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei","Noto Sans KR",sans-serif;
   line-height:1.6;
   overflow-x:hidden;
 }
@@ -184,6 +185,8 @@ h3.sec{font-size:16px;margin:18px 0 8px}
   margin-bottom:6px;
 }
 .step p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+
+/* 예약 단계 컨테이너 및 질문 카드 스타일 */
 .box{
   background:var(--card);
   border:1px solid var(--line);
@@ -284,15 +287,6 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--pri);outline-off
   border:1px solid rgba(27,107,58,0.22);
   font-weight:500;
 }
-.tr-box{
-  margin-top:8px;
-  padding:10px 12px;
-  border-radius:10px;
-  background:var(--ok);
-  color:var(--ok-t);
-  font-size:13px;
-}
-.tr-box b{display:block;margin-bottom:3px}
 .chk{
   display:flex;
   align-items:flex-start;
@@ -496,7 +490,7 @@ summary{cursor:pointer;font-weight:500}
 details p{margin:8px 0 0;color:var(--muted);font-size:14px}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 
-/* ===== 긴급 연락 패널 & 상황 배너 ===== */
+/* 긴급 연락·예약 변경 플로팅 버튼, 패널 및 상황 배너 스타일 */
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;border:0;border-radius:999px;background:#d93a3a;color:#fff;padding:12px 18px;font:inherit;font-weight:700;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}
 .fab:hover{filter:brightness(1.08)}
 .hp-back{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:none}
@@ -555,8 +549,8 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
   background:var(--card);
   border:1px solid var(--line);
 }
-.live-tr .ko{font-size:15px;line-height:1.6;margin:4px 0 10px;font-weight:600}
-.live-tr .zh{font-size:14px;line-height:1.6;margin:4px 0 0;color:var(--ok-t);background:var(--ok);padding:8px 10px;border-radius:8px;font-family:"Noto Sans SC","Noto Sans KR",sans-serif}
+.live-tr .ko{font-size:15px;line-height:1.6;margin:4px 0 10px;font-weight:600;font-family:"Noto Sans KR",sans-serif}
+.live-tr .zh{font-size:14px;line-height:1.6;margin:4px 0 0;color:var(--ok-t);background:var(--ok);padding:8px 10px;border-radius:8px}
 .uc{border:1px solid var(--line);border-left:4px solid #d93a3a;border-radius:12px;padding:12px 14px;margin-bottom:12px;background:var(--bg)}
 .uc.pri{border-left-color:var(--pri)}
 .uc h4{margin:0 0 4px;font-size:14px}
@@ -572,282 +566,299 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 .samp{font-size:11px;color:var(--warn-t);background:var(--warn);border-radius:6px;padding:1px 6px}
 .show-ov{position:fixed;inset:0;z-index:60;background:#fff;color:#111;display:none;flex-direction:column;justify-content:center;gap:18px;padding:28px;text-align:center}
 .so-top{font-size:13px;color:#666}
-.so-ko{font-size:clamp(24px,6vw,40px);line-height:1.5;font-weight:700}
-.so-zh{font-size:clamp(18px,4vw,24px);line-height:1.5;color:#333;font-family:"Noto Sans SC","Noto Sans KR",sans-serif}
+.so-ko{font-size:clamp(24px,6vw,40px);line-height:1.5;font-weight:700;font-family:"Noto Sans KR",sans-serif}
+.so-zh{font-size:clamp(18px,4vw,24px);line-height:1.5;color:#333}
 </style>
 </head>
 <body>
+<!-- 상단 헤더 내비게이션 -->
 <header>
-  <span class="logo">K-Beauty 뷰티데이 예약</span>
+  <span class="logo">K-Beauty 美妆日预约</span>
   <div class="hdr-right">
-    <span class="lang">한국어 · 링크 공유 미리보기</span>
-    <button type="button" class="mini" id="topShareBtn">현재 링크 복사</button>
-    <button type="button" class="theme-btn" id="themeBtn" aria-label="테마 전환">테마 전환</button>
+    <span class="lang">简体中文 · 链接分享预览</span>
+    <button type="button" class="mini" id="topShareBtn">复制当前链接</button>
+    <button type="button" class="theme-btn" id="themeBtn" aria-label="切换主题">切换主题</button>
   </div>
 </header>
 
+<!-- 메인 히어로 배너 -->
 <section class="hero">
-  <h1>하루 만에 완성하는 K-뷰티 데이 예약</h1>
-  <p>지역과 상품을 고르고 업종별 매장과 시간을 정해 보세요. 선택한 내용은 공유 링크로 만들어 다른 사람에게 보낼 수 있어요.</p>
-  <button type="button" class="btn" id="heroBookBtn">예약 신청하기</button>
+  <h1>一天完成 K-Beauty 美妆体验预约</h1>
+  <p>选择地区与套餐或单品，并安排各项目门店与时间。所选内容会保存在分享链接中，方便转发查看。</p>
+  <button type="button" class="btn" id="heroBookBtn">立即预约</button>
 </section>
 
 <main>
-  <h2>예약 방법</h2>
-  <p class="sub">지금은 서버 없이 쓰는 미리보기 모드예요. 선택한 내용이 주소(#s=...)에 담겨서 링크로 공유할 수 있어요.</p>
+  <!-- 예약 진행 안내 섹션 -->
+  <h2>预约流程</h2>
+  <p class="sub">当前为纯前端预览模式，所选内容会编码在网址（#s=...）中，可通过链接分享。</p>
   <div class="steps">
-    <div class="step"><b>1</b><br><strong>지역·상품·날짜</strong><p>서울 지역(또는 지역 무관), 상품, 희망 날짜를 골라요.</p></div>
-    <div class="step"><b>2</b><br><strong>매장·시간 정하기</strong><p>업종별 매장을 고르거나 직접 적고, 소요시간과 이동시간을 보며 시간을 정해요.</p></div>
-    <div class="step"><b>3</b><br><strong>위챗으로 확정 안내</strong><p>운영팀 확인 후 1시간 이내에 위챗으로 확정 또는 대안을 알려 드려요.</p></div>
-    <div class="step"><b>4</b><br><strong>매장 방문</strong><p>예약 확정 내용을 보여 주고 서비스를 이용해요.</p></div>
+    <div class="step"><b>1</b><br><strong>地区·项目·日期</strong><p>选择首尔区域（或不限区域）、套餐/单品及期望日期。</p></div>
+    <div class="step"><b>2</b><br><strong>门店·时间安排</strong><p>选择或填写各项目门店，结合时长与移动参考安排时间。</p></div>
+    <div class="step"><b>3</b><br><strong>微信确认通知</strong><p>运营团队确认后，将在1小时内通过微信通知预约结果或调整建议。</p></div>
+    <div class="step"><b>4</b><br><strong>到店体验</strong><p>出示预约信息即可顺利体验服务。</p></div>
   </div>
 
-  <h2>인기 패키지</h2>
-  <p class="sub">가장 많이 찾는 조합이에요. 가격은 아직 정해지지 않았어요.</p>
+  <!-- 인기 패키지 카드 섹션 -->
+  <h2>热门套餐</h2>
+  <p class="sub">最受欢迎的项目组合，最终价格以确认通知为准。</p>
   <div class="grid" id="pkgs"></div>
 
-  <h2 id="book">예약 신청</h2>
+  <!-- 다단계 예약 신청 폼 영역 -->
+  <h2 id="book">预约申请</h2>
   <div class="box">
     <div class="prog" id="prog"></div>
     <div class="notice warn" id="err" style="display:none"></div>
 
+    <!-- 1단계: 서울 희망 지역 선택 -->
     <div class="sp" data-s="1">
       <div class="q-card" id="q1">
-        <h3 class="sec" style="margin-top:0">① 서울 어느 지역에서 받고 싶으세요?<span class="req">*</span></h3>
+        <h3 class="sec" style="margin-top:0">① 您希望在首尔哪个区域体验？<span class="req">*</span></h3>
         <div class="sgrid" id="regs"></div>
       </div>
-      <div class="btns"><button type="button" class="btn" data-go="2">다음: 상품 선택</button></div>
+      <div class="btns"><button type="button" class="btn" data-go="2">下一步：选择项目</button></div>
     </div>
 
+    <!-- 2단계: 패키지 또는 단품 선택 -->
     <div class="sp" data-s="2">
       <div class="q-card" id="q2">
-        <h3 class="sec" style="margin-top:0">② 원하는 패키지 또는 단품을 고르세요<span class="req">*</span></h3>
-        <p class="sub">상품마다 포함된 업종이 달라요. 예상 소요시간은 이동시간을 뺀 평균 참고값이에요.</p>
+        <h3 class="sec" style="margin-top:0">② 请选择套餐或单项服务<span class="req">*</span></h3>
+        <p class="sub">不同项目包含的服务类别不同。预计时长为不含移动时间的平均参考值。</p>
         <div id="prods"></div>
       </div>
       <div class="btns">
-        <button type="button" class="btn ghost" data-go="1">← 이전</button>
-        <button type="button" class="btn" data-go="3">다음: 날짜 선택</button>
+        <button type="button" class="btn ghost" data-go="1">← 上一步</button>
+        <button type="button" class="btn" data-go="3">下一步：选择日期</button>
       </div>
     </div>
 
+    <!-- 3단계: 희망 날짜(1일) 선택 -->
     <div class="sp" data-s="3">
       <div class="q-card" id="q3">
-        <h3 class="sec" style="margin-top:0">③ 희망 날짜를 선택하세요 (1일)<span class="req">*</span></h3>
-        <div class="notice">📌 달력에서 날짜를 누르면 <b>희망 날짜</b>로 선택되고, 다시 누르면 취소돼요. 시간은 다음 단계에서 정해요.</div>
+        <h3 class="sec" style="margin-top:0">③ 请选择期望日期（1天）<span class="req">*</span></h3>
+        <div class="notice">📌 在日历中点击日期即可选定<b>期望日期</b>，再次点击可取消。具体时间在下一步安排。</div>
         <div class="cal">
           <div class="calhead">
             <button type="button" class="nav" id="prev">‹</button>
             <b id="ym"></b>
             <button type="button" class="nav" id="next">›</button>
           </div>
-          <div class="wk"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+          <div class="wk"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
           <div class="days" id="days"></div>
         </div>
         <div class="picked" id="picked"></div>
       </div>
       <div class="btns">
-        <button type="button" class="btn ghost" data-go="2">← 이전</button>
-        <button type="button" class="btn" data-go="4">다음: 매장 선택</button>
+        <button type="button" class="btn ghost" data-go="2">← 上一步</button>
+        <button type="button" class="btn" data-go="4">下一步：选择门店</button>
       </div>
     </div>
 
+    <!-- 4단계: 업종별 매장 선택 또는 직접 입력 -->
     <div class="sp" data-s="4">
       <div class="q-card" id="q4">
-        <h3 class="sec" style="margin-top:0">④ 업종별 매장을 선택하거나 직접 적어 주세요<span class="req">*</span></h3>
-        <p class="sub">업종마다 서로 다른 매장이에요. 선택한 지역의 매장을 먼저 보여 드리고, 앞에서 고른 매장과의 이동 정보(참고용)도 함께 안내해요. 가고 싶은 매장이 있으면 아래에 직접 적어도 돼요.</p>
+        <h3 class="sec" style="margin-top:0">④ 请选择或填写各服务类别门店<span class="req">*</span></h3>
+        <p class="sub">各服务项目对应不同门店。系统会优先展示所选区域的门店，并附上前序门店的移动参考。如有心仪门店也可直接在下方填写。</p>
         <div id="storeSteps"></div>
       </div>
       <div class="btns">
-        <button type="button" class="btn ghost" data-go="3">← 이전</button>
-        <button type="button" class="btn" data-go="5">다음: 시간 정하기</button>
+        <button type="button" class="btn ghost" data-go="3">← 上一步</button>
+        <button type="button" class="btn" data-go="5">下一步：安排时间</button>
       </div>
     </div>
 
+    <!-- 5단계: 업종별 시작 시간 및 이동 시간 안내 -->
     <div class="sp" data-s="5">
       <div class="q-card" id="q5">
-        <h3 class="sec" style="margin-top:0">⑤ 업종별 시작 시간을 정하세요<span class="req">*</span></h3>
-        <p class="sub">매장이 서로 달라서 위에서부터 순서대로 시작 시간을 골라 주세요. 앞 서비스의 <b>소요시간 + 이동시간</b>을 고려해야 해요. 잘 모르겠으면 "시간 무관"을 선택하면 운영팀이 조율해 드려요.</p>
+        <h3 class="sec" style="margin-top:0">⑤ 请安排各项目开始时间<span class="req">*</span></h3>
+        <p class="sub">由于各门店位置不同，请自上而下按顺序选择开始时间，并留出前一项服务的<b>时长 + 移动时间</b>。若不确定可选择“时间不限”，由运营团队协助协调。</p>
         <div id="tt"></div>
       </div>
       <div class="btns">
-        <button type="button" class="btn ghost" data-go="4">← 이전</button>
-        <button type="button" class="btn" data-go="6">다음: 신청자 정보</button>
+        <button type="button" class="btn ghost" data-go="4">← 上一步</button>
+        <button type="button" class="btn" data-go="6">下一步：填写申请人信息</button>
       </div>
     </div>
 
+    <!-- 6단계: 신청자 정보, 스타일 요청 및 변경/환불 페널티 안내 -->
     <div class="sp" data-s="6">
       <div class="q-card" id="q6">
-        <h3 class="sec" style="margin-top:0">⑥ 신청자 정보와 스타일 요청</h3>
-        <div class="notice">⚠️ 이 신청은 <b>예약 확정이 아니에요.</b> 신청 후 <b>1시간 이내에 예약 확정 시 위챗으로 추가 연락</b>을 드립니다.</div>
+        <h3 class="sec" style="margin-top:0">⑥ 申请人信息与造型需求</h3>
+        <div class="notice">⚠️ 提交申请<b>不代表预约已最终确认</b>。确认后将在<b>1小时内通过微信与您联系</b>。</div>
         <div class="row">
-          <label>인원<span class="req">*</span>
+          <label>人数<span class="req">*</span>
             <select id="ppl">
-              <option value="1">1명</option>
-              <option value="2">2명</option>
-              <option value="3">3명</option>
-              <option value="4">4명</option>
+              <option value="1">1人</option>
+              <option value="2">2人</option>
+              <option value="3">3人</option>
+              <option value="4">4人</option>
             </select>
           </label>
-          <label id="lblName">대표자 이름 (대표자 이름만 적어주세요)<span class="req">*</span>
-            <input id="name" placeholder="대표자 이름만 입력 (예: Li Mei)">
+          <label id="lblName">代表人姓名（请仅填写代表人姓名）<span class="req">*</span>
+            <input id="name" placeholder="仅填代表人姓名（如：Li Mei）">
           </label>
         </div>
         <div class="row">
-          <label id="lblWechat">위챗 ID (WeChat ID)<span class="req">*</span>
-            <input id="wechat" placeholder="위챗 ID를 입력해 주세요">
+          <label id="lblWechat">微信号（WeChat ID）<span class="req">*</span>
+            <input id="wechat" placeholder="请输入微信号">
           </label>
-          <label id="lblEmail">이메일<span class="req">*</span>
+          <label id="lblEmail">电子邮箱<span class="req">*</span>
             <input id="email" type="email" placeholder="example@email.com">
           </label>
         </div>
-        <label>원하는 스타일 / 참고 설명
-          <textarea id="memo" rows="3" placeholder="예: 맑고 자연스러운 메이크업, 쇄골 기장 헤어, 증명사진은 단정한 분위기로. 참고할 연예인/사진 링크가 있다면 함께 적어 주세요"></textarea>
+        <label>期望风格 / 参考说明
+          <textarea id="memo" rows="3" placeholder="例如：清透自然妆容、锁骨发长度、证件照偏端庄气质。如有参考明星或图片链接也可一并填写"></textarea>
         </label>
         <div class="policy-box">
-          <strong>📌 시간·예약 변경 추가금 및 환불 페널티 안내</strong>
+          <strong>📌 时间/预约变更附加费及退费扣款说明</strong>
           <ul>
-            <li>확정 전 또는 방문 48시간 전까지 시간·인원 변경 시 기본 변경 수수료가 부과되지 않으나, 매장 사정 및 추가 인원/옵션에 따른 <b>차액·추가금</b>이 발생할 수 있습니다.</li>
-            <li>방문 24~48시간 이내 변경·취소 시 <b>변경 수수료 또는 예약금 일부 공제(환불 페널티)</b>가 적용될 수 있습니다.</li>
-            <li>방문 24시간 이내 취소 및 노쇼(No-Show) 시 예약금 환불이 불가하거나 <b>100% 취소 페널티</b>가 발생할 수 있습니다.</li>
+            <li>预约确认前或到店48小时前调整时间/人数通常免收基础手续费，但可能因门店政策及新增人数/项目产生<b>差价或附加费</b>。</li>
+            <li>到店前24~48小时内变更或取消，可能会产生<b>变更手续费或扣除部分定金（退费违约金）</b>。</li>
+            <li>到店前24小时内取消或未到店（No-Show），定金可能不予退还或产生<b>100%取消费用</b>。</li>
           </ul>
         </div>
         <label class="chk" id="lblAgree" style="margin-top:12px">
           <input type="checkbox" id="agree">
-          <span>개인정보 수집·이용에 동의합니다. (대표자 이름, 위챗 ID, 이메일, 예약 정보 / 예약 확인 및 1시간 내 확정 연락 목적)<span class="req">*</span></span>
+          <span>我同意收集并使用个人信息（代表人姓名、微信号、邮箱、预约信息，用于预约核对及1小时内确认联系）<span class="req">*</span></span>
         </label>
       </div>
       <div class="btns">
-        <button type="button" class="btn ghost" data-go="5">← 이전</button>
-        <button type="button" class="btn" data-go="7">다음: 결제 단계</button>
+        <button type="button" class="btn ghost" data-go="5">← 上一步</button>
+        <button type="button" class="btn" data-go="7">下一步：定金支付</button>
       </div>
     </div>
 
+    <!-- 7단계: 예약금 결제(데모) 및 변경/환불 규정 동의 -->
     <div class="sp" data-s="7">
       <div class="q-card" id="q7">
-        <h3 class="sec" style="margin-top:0">⑦ 예약금 결제 (데모)</h3>
-        <div class="notice warn">🚧 <b>온라인 결제 기능은 준비 중이에요.</b> 데모 화면이라 실제로 결제되지 않아요.</div>
+        <h3 class="sec" style="margin-top:0">⑦ 预约定金支付（演示）</h3>
+        <div class="notice warn">🚧 <b>在线支付功能正在完善中。</b>当前为演示界面，不会产生真实扣款。</div>
         <div class="sumbox" id="paySum"></div>
-        <p class="sub" style="margin-bottom:8px"><b>결제 수단</b></p>
-        <label class="pm on"><input type="radio" name="pm" value="WeChat Pay" checked>위챗페이 (WeChat Pay)</label>
-        <label class="pm"><input type="radio" name="pm" value="Alipay">알리페이 (Alipay)</label>
-        <label class="pm"><input type="radio" name="pm" value="Card">신용/체크카드 (해외 카드 가능)</label>
+        <p class="sub" style="margin-bottom:8px"><b>支付方式</b></p>
+        <label class="pm on"><input type="radio" name="pm" value="WeChat Pay" checked>微信支付 (WeChat Pay)</label>
+        <label class="pm"><input type="radio" name="pm" value="Alipay">支付宝 (Alipay)</label>
+        <label class="pm"><input type="radio" name="pm" value="Card">信用卡/借记卡（支持境外卡）</label>
         <div class="policy-box">
-          <strong>⚠️ 시간/예약 변경 추가금 및 환불 페널티 공지</strong>
+          <strong>⚠️ 时间/预约变更附加费及退费扣款提示</strong>
           <ul>
-            <li>일정·시간·인원 변경 시 매장 규정에 따라 <b>추가금</b>이 발생하거나 확정 대기가 다시 진행될 수 있습니다.</li>
-            <li>예약 취소 시 시점(48시간 전 / 24시간 전 / 당일·노쇼)에 따라 <b>환불 페널티</b>가 차등 적용됩니다.</li>
+            <li>调整日期、时间或人数时，可能按门店规定产生<b>附加费</b>或需重新等待确认。</li>
+            <li>取消预约将根据时间节点（48小时前 / 24小时前 / 当天或未到店）适用不同的<b>退费扣款规则</b>。</li>
           </ul>
         </div>
         <label class="chk" id="lblAgree2" style="margin-top:12px">
           <input type="checkbox" id="agree2">
-          <span>예약 변경 추가금 및 환불 페널티 규정에 동의합니다.<span class="req">*</span></span>
+          <span>我已阅读并同意预约变更附加费及退费扣款规则。<span class="req">*</span></span>
         </label>
       </div>
       <div class="btns">
-        <button type="button" class="btn" id="payBtn">확인하고 신청하기</button>
-        <button type="button" class="btn ghost" id="skipPay">결제 없이 신청만 하기</button>
-        <button type="button" class="btn ghost" data-go="6">← 이전</button>
+        <button type="button" class="btn" id="payBtn">确认并提交申请</button>
+        <button type="button" class="btn ghost" id="skipPay">暂不支付，仅提交申请</button>
+        <button type="button" class="btn ghost" data-go="6">← 上一步</button>
       </div>
     </div>
 
+    <!-- 8단계: 예약 신청 완료 화면 및 운영팀·매장 위챗 QR 영역 -->
     <div class="sp" data-s="8" id="done">
-      <h3 id="doneTitle">✓ 예약 신청서가 접수되었어요</h3>
-      <p>접수 번호 <span class="code" id="code"></span></p>
+      <h3 id="doneTitle">✓ 预约申请已提交</h3>
+      <p>申请编号 <span class="code" id="code"></span></p>
       <div class="sumbox" id="doneSum" style="text-align:left"></div>
 
       <div class="qr-dual">
         <div class="qr-card">
-          <strong>운영팀 위챗 QR</strong>
-          <div class="qr" id="opsQrBox">운영팀 위챗 QR<br>(샘플 준비 중)</div>
-          <small style="color:var(--muted)">확정 안내 및 통역 중계</small>
+          <strong>运营团队微信二维码</strong>
+          <div class="qr" id="opsQrBox">运营团队微信二维码<br>（示例筹备中）</div>
+          <small style="color:var(--muted)">预约确认及翻译协助</small>
         </div>
         <div class="qr-card">
-          <strong>가게 위챗 QR</strong>
-          <div class="qr" id="storeQrBox">가게 위챗 QR<br>(샘플 준비 중)</div>
-          <small style="color:var(--muted)">선택 매장 담당자 문의</small>
+          <strong>门店微信二维码</strong>
+          <div class="qr" id="storeQrBox">门店微信二维码<br>（示例筹备中）</div>
+          <small style="color:var(--muted)">所选门店负责人联系</small>
         </div>
       </div>
 
       <div class="notice confirm" id="confirmNotice">
-        ⏰ 이 사이트만으로는 예약이 확정되지 않습니다. 신청 확인 후 <strong>1시간 내로 예약 확정 시 위챗으로 추가 연락</strong>을 드리겠습니다.
+        ⏰ 仅在本页面提交不代表预约已最终确定。核对后将在<strong>1小时内通过微信与您确认联系</strong>。
       </div>
 
       <div class="btns" style="justify-content:center">
-        <button type="button" class="btn ghost" id="openHelpDone">🆘 예약 변경 / 매장 연락이 필요하세요?</button>
+        <button type="button" class="btn ghost" id="openHelpDone">🆘 需要修改预约或联系门店？</button>
       </div>
       <div class="btns" style="justify-content:center">
-        <button type="button" class="btn" id="addBookingBtn">+ 추가예약</button>
-        <button type="button" class="btn ghost" id="copyBtn">예약 요약 복사</button>
+        <button type="button" class="btn" id="addBookingBtn">+ 新增预约</button>
+        <button type="button" class="btn ghost" id="copyBtn">复制预约摘要</button>
       </div>
     </div>
   </div>
 
-  <h2>자주 묻는 질문</h2>
-  <details><summary>신청하자마자 바로 예약이 확정되나요?</summary><p>아니요. 이 사이트만으로는 예약이 확정되지 않으며, 운영팀 확인 후 1시간 내로 예약 확정 시 위챗으로 추가 연락을 드립니다.</p></details>
-  <details><summary>시간이나 인원을 바꾸면 추가금이나 페널티가 있나요?</summary><p>네. 변경 시점과 매장 정책에 따라 추가금이 발생하거나 환불 페널티가 적용될 수 있습니다.</p></details>
-  <details><summary>하루에 여러 매장을 갈 수 있나요?</summary><p>네. 서비스별 소요시간과 매장 간 이동 정보를 바탕으로 시간 안내를 드려요. 잘 모르겠으면 "시간 무관"을 고르세요.</p></details>
-  <details><summary>스타일 요청은 매장에 어떻게 전달되나요?</summary><p>"원하는 스타일"에 적은 내용이 요약에 그대로 포함되어 전달돼요.</p></details>
+  <!-- 자주 묻는 질문(FAQ) 섹션 -->
+  <h2>常见问题</h2>
+  <details><summary>提交后预约就会立即生效吗？</summary><p>不会。仅提交表单不代表最终确认，运营团队核实后将在1小时内通过微信与您联系确认。</p></details>
+  <details><summary>修改时间或人数会有附加费或扣款吗？</summary><p>是的。根据变更时间及各门店政策，可能会产生附加费或适用退费扣款规则。</p></details>
+  <details><summary>一天内可以去多家门店吗？</summary><p>可以。系统会结合各项预计时长与门店间移动参考给出时间提示，不确定时可选择“时间不限”。</p></details>
+  <details><summary>造型需求会如何传达给门店？</summary><p>“期望风格”中填写的内容会保留在预约摘要中并同步传达。</p></details>
 </main>
-<footer>© K-Beauty 뷰티데이 · 소요시간·이동 정보는 참고값</footer>
+<footer>© K-Beauty 美妆日 · 时长与移动信息仅供参考</footer>
 
-<button type="button" class="fab" id="helpFab">🆘 예약 변경 · 매장 연락</button>
+<!-- 긴급 연락·예약 변경 플로팅 버튼, 하단 패널 및 직원 제시용 전체 화면 -->
+<button type="button" class="fab" id="helpFab">🆘 修改预约 · 联系门店</button>
 <div class="hp-back" id="hpBack"></div>
-<div class="hp" id="hp" role="dialog" aria-label="긴급 연락 패널">
-  <div class="hp-head"><b>🆘 예약 변경과 매장 연락</b><button type="button" class="mini" id="hpClose">닫기</button></div>
+<div class="hp" id="hp" role="dialog" aria-label="紧急联系与预约变更面板">
+  <div class="hp-head"><b>🆘 修改预约与联系门店</b><button type="button" class="mini" id="hpClose">关闭</button></div>
   <div class="hp-tabs">
-    <button type="button" class="hp-tab on" data-t="cards">상황별 메시지·실시간 번역</button>
-    <button type="button" class="hp-tab" data-t="ops">운영팀 위챗 중계</button>
-    <button type="button" class="hp-tab" data-t="store">매장 연락처</button>
+    <button type="button" class="hp-tab on" data-t="cards">场景话术·实时互译</button>
+    <button type="button" class="hp-tab" data-t="ops">运营团队微信协助</button>
+    <button type="button" class="hp-tab" data-t="store">门店联系方式</button>
   </div>
   <div class="hp-body" id="hpBody"></div>
 </div>
 <div class="show-ov" id="showOv">
-  <div class="so-top">직원분께 보여주세요</div>
+  <div class="so-top">请向店员出示 / 请出示给韩国店员</div>
   <div class="so-ko" id="soKo"></div>
   <div class="so-zh" id="soZh"></div>
-  <div><button type="button" class="btn" id="soClose">닫기</button></div>
+  <div><button type="button" class="btn" id="soClose">关闭</button></div>
 </div>
 
 <script>
-var cat = {color:"퍼스널컬러", hair:"헤어", makeup:"메이크업", photo:"사진관"};
+// 업종 분류, 예상 소요시간, 샘플 매장 및 상품 데이터
+var cat = {color:"色彩测试", hair:"美发造型", makeup:"妆容造型", photo:"证件/写真"};
 var ORDER = ["color", "hair", "makeup", "photo"];
 var DUR = {
-  color:{min:90, txt:"약 1~1.5시간"},
-  hair:{min:120, txt:"약 2시간"},
-  makeup:{min:60, txt:"약 1시간"},
-  photo:{min:90, txt:"약 1~1.5시간"}
+  color:{min:90, txt:"约 1~1.5小时"},
+  hair:{min:120, txt:"约 2小时"},
+  makeup:{min:60, txt:"约 1小时"},
+  photo:{min:90, txt:"约 1~1.5小时"}
 };
 var stores = [
-  {n:"준오헤어", c:"hair", area:"강남", addr:"서울 강남구 강남대로 422", la:37.5005, lo:127.0300},
-  {n:"박승철헤어스튜디오", c:"hair", area:"명동", addr:"서울 중구 명동8나길 18", la:37.5640, lo:126.9840},
-  {n:"리안헤어", c:"hair", area:"홍대", addr:"서울 마포구 양화로 160", la:37.5575, lo:126.9245},
-  {n:"히르청담", c:"makeup", area:"강남", addr:"서울 강남구 도산대로 456", la:37.5235, lo:127.0450},
-  {n:"샘플 메이크업숍 A", c:"makeup", area:"홍대", addr:"서울 마포구 홍익로 15", la:37.5560, lo:126.9230},
-  {n:"샘플 메이크업숍 B", c:"makeup", area:"명동", addr:"서울 중구 명동길 35", la:37.5625, lo:126.9825},
-  {n:"우리동네사진관", c:"photo", area:"종로", addr:"서울 종로구 종로 64", la:37.5705, lo:126.9925},
-  {n:"Fork Studio", c:"photo", area:"이대", addr:"서울 서대문구 이화여대길 52", la:37.5575, lo:126.9465},
-  {n:"Time On Me Studio", c:"photo", area:"홍대", addr:"서울 마포구 어울마당로 94", la:37.5550, lo:126.9215},
-  {n:"시현하다", c:"photo", area:"성수", addr:"서울 성동구 연무장길 33", la:37.5447, lo:127.0560},
-  {n:"샘플 퍼스널컬러 샵 A", c:"color", area:"명동", addr:"서울 중구 퇴계로 123", la:37.5632, lo:126.9850},
-  {n:"샘플 퍼스널컬러 샵 B", c:"color", area:"홍대", addr:"서울 마포구 와우산로 29길 14", la:37.5568, lo:126.9250}
+  {n:"JUNO HAIR 江南店", c:"hair", area:"江南", addr:"首尔江南区江南大路 422", la:37.5005, lo:127.0300},
+  {n:"朴胜哲美发工作室 明洞店", c:"hair", area:"明洞", addr:"首尔中区明洞8那街 18", la:37.5640, lo:126.9840},
+  {n:"RiAn HAIR 弘大店", c:"hair", area:"弘大", addr:"首尔麻浦区杨花路 160", la:37.5575, lo:126.9245},
+  {n:"HIRR 清潭化妆室", c:"makeup", area:"江南", addr:"首尔江南区岛山大路 456", la:37.5235, lo:127.0450},
+  {n:"示例化妆店 A（弘大）", c:"makeup", area:"弘大", addr:"首尔麻浦区弘益路 15", la:37.5560, lo:126.9230},
+  {n:"示例化妆店 B（明洞）", c:"makeup", area:"明洞", addr:"首尔中区明洞街 35", la:37.5625, lo:126.9825},
+  {n:"邻里照相馆 钟路店", c:"photo", area:"钟路", addr:"首尔钟路区钟路 64", la:37.5705, lo:126.9925},
+  {n:"Fork Studio 梨大店", c:"photo", area:"梨大", addr:"首尔西大门区梨花女大街 52", la:37.5575, lo:126.9465},
+  {n:"Time On Me Studio 弘大店", c:"photo", area:"弘大", addr:"首尔麻浦区卧牛山路 94", la:37.5550, lo:126.9215},
+  {n:"Sihyunhada 圣水店", c:"photo", area:"圣水", addr:"首尔城东区演武场街 33", la:37.5447, lo:127.0560},
+  {n:"示例色彩测试店 A（明洞）", c:"color", area:"明洞", addr:"首尔中区退溪路 123", la:37.5632, lo:126.9850},
+  {n:"示例色彩测试店 B（弘大）", c:"color", area:"弘大", addr:"首尔麻浦区卧牛山路29街 14", la:37.5568, lo:126.9250}
 ];
 var prods = [
-  {n:"뷰티데이 풀코스", pkg:1, hot:1, cats:["color","hair","makeup","photo"], desc:"퍼스널컬러 + 헤어 + 메이크업 + 증명사진"},
-  {n:"메이크업 + 증명사진", pkg:1, cats:["makeup","photo"], desc:"아이돌풍 메이크업 + 촬영·보정"},
-  {n:"헤어 + 메이크업", pkg:1, cats:["hair","makeup"], desc:"스타일링 한 번에"},
-  {n:"증명사진/프로필", cats:["photo"], desc:"전문 촬영 + 1:1 보정"},
-  {n:"메이크업", cats:["makeup"], desc:"메이크업 단독"},
-  {n:"헤어", cats:["hair"], desc:"헤어 단독"},
-  {n:"퍼스널컬러 진단", cats:["color"], desc:"진단 단독"}
+  {n:"美妆日全套组合", pkg:1, hot:1, cats:["color","hair","makeup","photo"], desc:"色彩测试 + 美发 + 妆容 + 证件照"},
+  {n:"妆容 + 证件照组合", pkg:1, cats:["makeup","photo"], desc:"韩系妆容 + 拍摄精修"},
+  {n:"美发 + 妆容组合", pkg:1, cats:["hair","makeup"], desc:"发型与妆容一站式"},
+  {n:"证件照/形象照", cats:["photo"], desc:"专业拍摄 + 1对1精修"},
+  {n:"妆容造型", cats:["makeup"], desc:"单选妆容服务"},
+  {n:"美发造型", cats:["hair"], desc:"单选美发服务"},
+  {n:"个人色彩诊断", cats:["color"], desc:"单选色彩诊断"}
 ];
 
 var DEPOSIT = 10000;
 var $ = function(id){ return document.getElementById(id); };
-var WD = ["일","월","화","수","목","금","토"];
+var WD = ["周日","周一","周二","周三","周四","周五","周六"];
 var areas = [];
 stores.forEach(function(s){ if(areas.indexOf(s.area) < 0) areas.push(s.area); });
 
+// 현재 예약 진행 상태 및 단계 표시 라벨
 var st = {
   region: null,
   prod: -1,
@@ -858,8 +869,9 @@ var st = {
   step: 1,
   shareCode: ""
 };
-var LABELS = ["지역","상품","날짜","매장","시간","정보","결제","완료"];
+var LABELS = ["区域","项目","日期","门店","时间","信息","支付","完成"];
 
+// 유효성 검사 실패 시 해당 항목으로 스크롤 이동 및 강조 표시
 function focusTarget(el){
   if(!el) return;
   document.querySelectorAll(".field-alert").forEach(function(node){
@@ -894,6 +906,7 @@ function clearErr(){
   });
 }
 
+// 예약 상태를 URL 해시(#s=...)로 인코딩해 링크 공유 및 복원 지원
 function encodeStateToHash(){
   try {
     var payload = {
@@ -927,6 +940,7 @@ function encodeStateToHash(){
   }
 }
 
+// URL 해시(#s=...)에서 예약 상태 복원
 function decodeStateFromHash(){
   try {
     var h = window.location.hash || "";
@@ -961,6 +975,7 @@ function decodeStateFromHash(){
   }
 }
 
+// 클립보드 복사 헬퍼(Clipboard API 우선, 미지원 시 execCommand 폴백)
 function copyTextFallback(text, btnEl, defaultLabel, doneLabel){
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(text).then(function(){
@@ -987,11 +1002,12 @@ function execCopyLegacy(text, btnEl, defaultLabel, doneLabel){
       setTimeout(function(){ btnEl.textContent = defaultLabel; }, 2000);
     }
   } catch(err) {
-    msg("복사에 실패했어요. 직접 복사해 주세요.");
+    msg("复制失败，请手动复制。");
   }
   document.body.removeChild(ta);
 }
 
+// 라이트/다크 테마 전환 처리
 $("themeBtn").onclick = function(){
   var root = document.documentElement;
   var cur = root.getAttribute("data-theme");
@@ -999,13 +1015,14 @@ $("themeBtn").onclick = function(){
   root.setAttribute("data-theme", isDark ? "light" : "dark");
 };
 
+// 날짜 포맷, 소요시간, 거리 및 이동시간/택시요금 계산 함수
 function ymd(d){
   return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
 }
 function fd(k){
-  if(!k) return "선택 안 함";
+  if(!k) return "未选择";
   var p = k.split("-");
-  return k + " (" + WD[new Date(+p[0], +p[1]-1, +p[2]).getDay()] + ")";
+  return k + "（" + WD[new Date(+p[0], +p[1]-1, +p[2]).getDay()] + "）";
 }
 function tm(s){
   var p = s.split(":");
@@ -1019,8 +1036,8 @@ function c30(m){
 }
 function fdur(min){
   var h = Math.floor(min/60), m = min%60;
-  if(!h) return "약 " + m + "분";
-  return "약 " + h + "시간" + (m ? " " + m + "분" : "");
+  if(!h) return "约 " + m + "分钟";
+  return "约 " + h + "小时" + (m ? " " + m + "分钟" : "");
 }
 function needCats(){
   if(st.prod < 0 || !prods[st.prod]) return [];
@@ -1030,21 +1047,21 @@ function needCats(){
 function sname(c){
   var custom = (st.customStores[c] || "").trim();
   var i = st.chosen[c];
-  var base = (i !== undefined && i >= 0 && stores[i]) ? (stores[i].n + " (" + stores[i].area + ")") : "";
-  if(custom && base) return custom + " [참고: " + base + "]";
-  if(custom) return custom + " (직접 입력)";
+  var base = (i !== undefined && i >= 0 && stores[i]) ? (stores[i].n + "（" + stores[i].area + "）") : "";
+  if(custom && base) return custom + " [参考：" + base + "]";
+  if(custom) return custom + "（自定义填写）";
   if(base) return base;
-  return "미입력";
+  return "未填写";
 }
 
 function storeWithAddr(c){
   var custom = (st.customStores[c] || "").trim();
   var i = st.chosen[c];
   var s = (i !== undefined && i >= 0 && stores[i]) ? stores[i] : null;
-  if(custom && s) return custom + " (" + s.addr + " / 참고: " + s.n + ")";
-  if(custom) return custom + " (주소는 운영팀 확정 안내 시 확인)";
+  if(custom && s) return custom + "（" + s.addr + " / 参考：" + s.n + "）";
+  if(custom) return custom + "（地址以运营确认通知为准）";
   if(s) return s.n + " — " + s.addr;
-  return "미입력";
+  return "未填写";
 }
 
 function totalMin(cs){
@@ -1070,7 +1087,7 @@ function trav(i, j){
   };
 }
 function travText(t){
-  return "도보 약 " + t.walk + "분" + (t.walk > 45 ? "(멀어요)" : "") + " · 택시 약 " + t.taxi + "분 · 약 " + t.km + "km · 택시비 약 ₩" + t.fare.toLocaleString();
+  return "步行约 " + t.walk + "分钟" + (t.walk > 45 ? "（距离较远）" : "") + " · 打车约 " + t.taxi + "分钟 · 约 " + t.km + "km · 参考车费约 ₩" + t.fare.toLocaleString();
 }
 function pair(a, b){
   var i = st.chosen[a], j = st.chosen[b];
@@ -1082,9 +1099,10 @@ function travelMin(a, b){
 }
 function moveText(a, b){
   var t = pair(a, b);
-  return t ? travText(t) : "실제 이동 시간을 고려해 여유 있게 잡아 주세요 (기본 30분 기준)";
+  return t ? travText(t) : "请结合实际交通情况预留充足时间（默认参考 30 分钟）";
 }
 
+// 히어로 예약 버튼 및 인기 패키지 카드 선택 이벤트
 $("heroBookBtn").onclick = function(){
   show(st.step || 1);
   $("book").scrollIntoView({behavior:"smooth", block:"start"});
@@ -1096,9 +1114,9 @@ prods.forEach(function(p, i){
   var d = document.createElement("div");
   d.className = "card" + (p.hot ? " pk" : "");
   d.innerHTML = p.cats.map(function(c){ return '<span class="tag">' + cat[c] + '</span>'; }).join("") +
-    (p.hot ? '<span class="tag">인기</span>' : "") +
-    '<h3>' + p.n + '</h3><ul><li>' + p.desc + '</li><li>예상 소요 ' + fdur(totalMin(p.cats)) + ' (이동 제외)</li></ul>' +
-    '<button type="button" class="btn" data-p="' + i + '">이 패키지로 신청</button>';
+    (p.hot ? '<span class="tag">热门</span>' : "") +
+    '<h3>' + p.n + '</h3><ul><li>' + p.desc + '</li><li>预计时长 ' + fdur(totalMin(p.cats)) + '（不含移动）</li></ul>' +
+    '<button type="button" class="btn" data-p="' + i + '">选择此套餐</button>';
   pk.appendChild(d);
 });
 pk.onclick = function(e){
@@ -1115,6 +1133,7 @@ pk.onclick = function(e){
   $("book").scrollIntoView({behavior:"smooth", block:"start"});
 };
 
+// 단계 진행 바 렌더링 및 이전 단계 클릭 이동
 function drawProg(){
   $("prog").innerHTML = LABELS.map(function(l, i){
     var n = i + 1;
@@ -1129,13 +1148,14 @@ $("prog").onclick = function(e){
   if(target < st.step && st.step < 8) show(target);
 };
 
+// 서울 지역 선택 버튼 렌더링 및 선택 처리
 function drawRegs(){
   var h = '';
   areas.forEach(function(a){
     var n = stores.filter(function(s){ return s.area === a; }).length;
-    h += '<button type="button" class="sc' + (st.region === a ? ' on' : '') + '" data-r="' + a + '"><b>서울 ' + a + '</b><small>매장 ' + n + '곳</small></button>';
+    h += '<button type="button" class="sc' + (st.region === a ? ' on' : '') + '" data-r="' + a + '"><b>首尔 ' + a + '</b><small>参考门店 ' + n + ' 家</small></button>';
   });
-  h += '<button type="button" class="sc' + (st.region === "all" ? ' on' : '') + '" data-r="all"><b>지역 무관</b><small>서울 어디든 괜찮아요</small></button>';
+  h += '<button type="button" class="sc' + (st.region === "all" ? ' on' : '') + '" data-r="all"><b>不限区域</b><small>首尔任意区域均可</small></button>';
   $("regs").innerHTML = h;
 }
 $("regs").onclick = function(e){
@@ -1150,10 +1170,11 @@ $("regs").onclick = function(e){
   drawRegs();
 };
 
+// 패키지 및 단품 선택 카드 렌더링 및 선택 처리
 function prodCard(p, i){
   return '<button type="button" class="sc' + (st.prod === i ? ' on' : '') + '" data-p="' + i + '">' +
     p.cats.map(function(c){ return '<span class="tag">' + cat[c] + '</span>'; }).join("") +
-    '<b>' + p.n + '</b><small>' + p.desc + '</small><small>예상 소요 ' + fdur(totalMin(p.cats)) + ' (이동 제외)</small></button>';
+    '<b>' + p.n + '</b><small>' + p.desc + '</small><small>预计时长 ' + fdur(totalMin(p.cats)) + '（不含移动）</small></button>';
 }
 function drawProds(){
   var a = '', b = '';
@@ -1161,7 +1182,7 @@ function drawProds(){
     if(p.pkg) a += prodCard(p, i);
     else b += prodCard(p, i);
   });
-  $("prods").innerHTML = '<p class="hint"><b>패키지</b></p><div class="sgrid">' + a + '</div><p class="hint"><b>단품</b></p><div class="sgrid">' + b + '</div>';
+  $("prods").innerHTML = '<p class="hint"><b>套餐组合</b></p><div class="sgrid">' + a + '</div><p class="hint"><b>单项服务</b></p><div class="sgrid">' + b + '</div>';
 }
 $("prods").onclick = function(e){
   var b = e.target.closest("button[data-p]");
@@ -1177,13 +1198,14 @@ $("prods").onclick = function(e){
   drawProds();
 };
 
+// 달력 렌더링 및 희망 날짜(1일) 선택/해제 처리
 var todayD = new Date();
 todayD.setHours(0,0,0,0);
 var today = ymd(todayD);
 var view = new Date(todayD.getFullYear(), todayD.getMonth(), 1);
 
 function drawCal(){
-  $("ym").textContent = view.getFullYear() + "년 " + (view.getMonth()+1) + "월";
+  $("ym").textContent = view.getFullYear() + "年 " + (view.getMonth()+1) + "月";
   var el = $("days");
   el.innerHTML = "";
   var first = view.getDay();
@@ -1205,9 +1227,9 @@ function drawCal(){
 }
 function drawPicked(){
   if(st.date){
-    $("picked").innerHTML = '<div class="pi"><span><b>희망 날짜</b> · ' + fd(st.date) + '</span><button type="button" id="clearDateBtn" aria-label="날짜 지우기">✕</button></div>';
+    $("picked").innerHTML = '<div class="pi"><span><b>期望日期</b> · ' + fd(st.date) + '</span><button type="button" id="clearDateBtn" aria-label="清除日期">✕</button></div>';
   } else {
-    $("picked").innerHTML = '<div class="pi empty"><span><b>희망 날짜</b> · 위 달력에서 1일을 선택해 주세요 (필수)</span></div>';
+    $("picked").innerHTML = '<div class="pi empty"><span><b>期望日期</b> · 请在上方日历选择1天（必填）</span></div>';
   }
 }
 function drawDates(){
@@ -1243,6 +1265,7 @@ $("next").onclick = function(){
   drawCal();
 };
 
+// 업종별 매장 선택 카드 및 직접 입력 필드 렌더링
 function drawStoreSteps(){
   var h = '', nums = ["①","②","③","④"], cs = needCats();
   cs.forEach(function(c, k){
@@ -1253,21 +1276,21 @@ function drawStoreSteps(){
     var list = fb ? all : inR;
 
     h += '<div class="store-cat-block" data-cat="' + c + '">';
-    h += '<h3 class="sec">' + nums[k] + ' ' + cat[c] + ' <small style="font-weight:400;color:var(--muted)">· 예상 ' + DUR[c].txt + '</small></h3>';
-    if(fb) h += '<p class="hint">선택한 지역에 해당 업종의 참고 매장이 아직 없어서 서울 다른 지역 매장을 보여 드려요. 가고 싶은 매장을 직접 적어도 돼요.</p>';
+    h += '<h3 class="sec">' + nums[k] + ' ' + cat[c] + ' <small style="font-weight:400;color:var(--muted)">· 预计 ' + DUR[c].txt + '</small></h3>';
+    if(fb) h += '<p class="hint">当前所选区域暂无该类别参考门店，以下展示首尔其他区域门店，您也可直接在下方填写心仪门店。</p>';
     var prev = k > 0 ? cs[k-1] : null;
     h += '<div class="sgrid">';
     list.forEach(function(i){
       var extra = '';
       if(prev && st.chosen[prev] >= 0){
         var t = trav(st.chosen[prev], i);
-        extra = '<small>앞 ' + cat[prev] + ' 매장에서 도보 약 ' + t.walk + '분 · 택시 약 ' + t.taxi + '분 (약 ' + t.km + 'km)</small>';
+        extra = '<small>自前序 ' + cat[prev] + ' 门店：步行约 ' + t.walk + '分钟 · 打车约 ' + t.taxi + '分钟（约 ' + t.km + 'km）</small>';
       }
-      h += '<button type="button" class="sc' + (st.chosen[c] === i ? ' on' : '') + '" data-c="' + c + '" data-i="' + i + '"><b>' + stores[i].n + '</b><small>📍 서울 ' + stores[i].area + ' · ' + stores[i].addr + '</small>' + extra + '</button>';
+      h += '<button type="button" class="sc' + (st.chosen[c] === i ? ' on' : '') + '" data-c="' + c + '" data-i="' + i + '"><b>' + stores[i].n + '</b><small>📍 首尔 ' + stores[i].area + ' · ' + stores[i].addr + '</small>' + extra + '</button>';
     });
     h += '</div>';
     var curCustom = st.customStores[c] || "";
-    h += '<div class="custom-store-box"><label>✍️ 가고 싶은 ' + cat[c] + ' 매장 이름 (직접 적거나 보충해도 돼요)<input type="text" class="custom-store-input" data-c="' + c + '" value="' + curCustom.replace(/"/g, "&quot;") + '" placeholder="예: OO 청담 메이크업 / 인스타에서 본 매장"></label></div>';
+    h += '<div class="custom-store-box"><label>✍️ 想去的 ' + cat[c] + ' 门店名称（可手动填写或补充）<input type="text" class="custom-store-input" data-c="' + c + '" value="' + curCustom.replace(/"/g, "&quot;") + '" placeholder="例如：清潭某化妆店 / 小红书或 Ins 看到的门店"></label></div>';
     h += '</div>';
   });
   $("storeSteps").innerHTML = h;
@@ -1286,8 +1309,9 @@ $("storeSteps").addEventListener("input", function(e){
   st.customStores[inp.dataset.c] = inp.value;
 });
 
+// 업종별 시작 시간 선택, 자동 계산 및 이동시간 충돌 경고
 function opts(v){
-  var h = '<option value="">시간 선택</option><option value="any"' + (v === "any" ? " selected" : "") + '>시간 무관</option>';
+  var h = '<option value="">请选择时间</option><option value="any"' + (v === "any" ? " selected" : "") + '>时间不限</option>';
   for(var m = 600; m <= 1170; m += 30){
     var t = ft(m);
     h += '<option' + (v === t ? " selected" : "") + '>' + t + '</option>';
@@ -1302,21 +1326,21 @@ function conflict(k){
   var mv = travelMin(a, b);
   var need = tm(pv) + DUR[a].min + mv;
   if(tm(cv) < need){
-    return "⚠️ " + cat[a] + "이(가) " + ft(tm(pv)+DUR[a].min) + "쯤 끝나고 이동(약 " + mv + "분)까지 고려하면 " + ft(c30(need)) + " 이후가 좋아요";
+    return "⚠️ " + cat[a] + "预计 " + ft(tm(pv)+DUR[a].min) + " 左右结束，加上移动（约 " + mv + "分钟）建议安排在 " + ft(c30(need)) + " 之后";
   }
   return "";
 }
 function drawTT(){
   var cs = needCats();
   var d = st.date;
-  var h = '<div class="tt"><div class="tthead"><b>희망 날짜 · ' + fd(d) + '</b><span class="ttb">' +
-    '<button type="button" class="mini" data-a="any">모두 시간 무관</button>' +
-    (cs.length > 1 ? '<button type="button" class="mini" data-a="auto">첫 시간 기준 자동 채우기</button>' : '') +
+  var h = '<div class="tt"><div class="tthead"><b>期望日期 · ' + fd(d) + '</b><span class="ttb">' +
+    '<button type="button" class="mini" data-a="any">全部设为时间不限</button>' +
+    (cs.length > 1 ? '<button type="button" class="mini" data-a="auto">按首项时间自动推算</button>' : '') +
     '</span></div>';
   cs.forEach(function(c, k){
-    if(k > 0) h += '<div class="mv">↓ 이동 참고: ' + moveText(cs[k-1], c) + '</div>';
+    if(k > 0) h += '<div class="mv">↓ 移动参考：' + moveText(cs[k-1], c) + '</div>';
     var v = st.times[c] || "";
-    h += '<div class="trow" data-trow="' + c + '"><div><b>' + cat[c] + '</b> <small>' + sname(c) + '</small><br><small>예상 ' + DUR[c].txt + (v && v !== "any" ? ' · ' + v + ' ~ ' + ft(tm(v)+DUR[c].min) : '') + '</small></div><select data-c="' + c + '">' + opts(v) + '</select></div>';
+    h += '<div class="trow" data-trow="' + c + '"><div><b>' + cat[c] + '</b> <small>' + sname(c) + '</small><br><small>预计 ' + DUR[c].txt + (v && v !== "any" ? ' · ' + v + ' ~ ' + ft(tm(v)+DUR[c].min) : '') + '</small></div><select data-c="' + c + '">' + opts(v) + '</select></div>';
     var w = conflict(k);
     if(w) h += '<div class="warnl">' + w + '</div>';
   });
@@ -1342,7 +1366,7 @@ $("tt").onclick = function(e){
     var f0 = st.times[cs[0]];
     if(!f0){
       var firstSel = $("tt").querySelector('select[data-c="' + cs[0] + '"]');
-      msg("첫 번째 서비스의 시작 시간을 먼저 선택해 주세요", firstSel);
+      msg("请先选择第一项服务的开始时间", firstSel);
       return;
     }
     if(f0 === "any"){
@@ -1360,32 +1384,33 @@ $("tt").onclick = function(e){
           st.times[cs[k]] = ft(v);
         }
       }
-      if(overflow) msg("19:30을 넘는 뒤쪽 서비스는 자동으로 \"시간 무관\"으로 설정했어요.");
+      if(overflow) msg("超过 19:30 的后续项目已自动设为“时间不限”。");
     }
   }
   drawTT();
 };
 
+// 예약 요약 목록 및 클립보드 복사 텍스트 생성
 function sumHtml(withTot){
   var cs = needCats();
   var v = function(id){ return $(id) && $(id).value ? $(id).value.trim() : ""; };
-  var prodName = (st.prod >= 0 && prods[st.prod]) ? prods[st.prod].n : "선택 안 함";
-  var regText = st.region === "all" ? "지역 무관" : (st.region ? "서울 " + st.region : "선택 안 함");
-  var h = '<div><span>예약 지역</span><span>' + regText + '</span></div>' +
-    '<div><span>상품</span><span>' + prodName + '</span></div>' +
-    '<div><span>희망 날짜</span><span>' + fd(st.date) + '</span></div>';
+  var prodName = (st.prod >= 0 && prods[st.prod]) ? prods[st.prod].n : "未选择";
+  var regText = st.region === "all" ? "不限区域" : (st.region ? "首尔 " + st.region : "未选择");
+  var h = '<div><span>预约区域</span><span>' + regText + '</span></div>' +
+    '<div><span>所选项目</span><span>' + prodName + '</span></div>' +
+    '<div><span>期望日期</span><span>' + fd(st.date) + '</span></div>';
   cs.forEach(function(c){
-    var tVal = st.times[c] === "any" ? "시간 무관" : (st.times[c] || "선택 안 함");
-    h += '<div><span>예약매장 (' + cat[c] + ')</span><span style="text-align:right">' + storeWithAddr(c) + ' · ' + tVal + '</span></div>';
+    var tVal = st.times[c] === "any" ? "时间不限" : (st.times[c] || "未选择");
+    h += '<div><span>预约门店（' + cat[c] + '）</span><span style="text-align:right">' + storeWithAddr(c) + ' · ' + tVal + '</span></div>';
   });
-  h += '<div><span>인원</span><span>' + (v("ppl") || "1") + '명</span></div>';
+  h += '<div><span>人数</span><span>' + (v("ppl") || "1") + '人</span></div>';
   if(v("name")){
-    h += '<div><span>대표자 이름</span><span>' + esc(v("name")) + '</span></div>';
+    h += '<div><span>代表人姓名</span><span>' + esc(v("name")) + '</span></div>';
   }
   if(v("memo")){
-    h += '<div><span>스타일 요청</span><span style="text-align:right;max-width:65%">' + esc(v("memo")) + '</span></div>';
+    h += '<div><span>期望风格</span><span style="text-align:right;max-width:65%">' + esc(v("memo")) + '</span></div>';
   }
-  if(withTot) h += '<div class="tot"><span>예약금 (샘플)</span><span>₩' + DEPOSIT.toLocaleString() + '</span></div>';
+  if(withTot) h += '<div class="tot"><span>预约定金（示例）</span><span>₩' + DEPOSIT.toLocaleString() + '</span></div>';
   return h;
 }
 
@@ -1393,25 +1418,26 @@ function buildCopyText(){
   var cs = needCats();
   var v = function(id){ return $(id) && $(id).value ? $(id).value.trim() : ""; };
   var lines = [
-    "[K-Beauty 뷰티데이 예약 신청서]",
-    "접수번호: " + $("code").textContent,
-    "예약 지역: " + (st.region === "all" ? "지역 무관" : "서울 " + st.region),
-    "상품: " + ((st.prod >= 0 && prods[st.prod]) ? prods[st.prod].n : "선택 안 함"),
-    "희망 날짜: " + fd(st.date),
-    "인원: " + (v("ppl") || "1") + "명",
-    "대표자 이름: " + v("name") + " (위챗: " + v("wechat") + " / Email: " + v("email") + ")"
+    "[K-Beauty 美妆日预约申请单]",
+    "申请编号：" + $("code").textContent,
+    "预约区域：" + (st.region === "all" ? "不限区域" : "首尔 " + st.region),
+    "所选项目：" + ((st.prod >= 0 && prods[st.prod]) ? prods[st.prod].n : "未选择"),
+    "期望日期：" + fd(st.date),
+    "人数：" + (v("ppl") || "1") + "人",
+    "代表人姓名：" + v("name") + "（微信：" + v("wechat") + " / 邮箱：" + v("email") + "）"
   ];
   cs.forEach(function(c){
-    var tVal = st.times[c] === "any" ? "시간 무관" : (st.times[c] || "선택 안 함");
-    lines.push("- 예약매장(" + cat[c] + "): " + storeWithAddr(c) + " @ " + tVal);
+    var tVal = st.times[c] === "any" ? "时间不限" : (st.times[c] || "未选择");
+    lines.push("- 预约门店（" + cat[c] + "）：" + storeWithAddr(c) + " @ " + tVal);
   });
   if(v("memo")){
-    lines.push("스타일 요청: " + v("memo"));
+    lines.push("期望风格：" + v("memo"));
   }
-  lines.push("안내: 1시간 내로 예약 확정 시 위챗으로 추가 연락을 드립니다.");
+  lines.push("提示：仅提交不代表最终确认，将在1小时内通过微信确认联系。");
   return lines.join("\n");
 }
 
+// 단계 전환 및 단계별 필수 입력 검증
 function show(n, quiet){
   st.step = n;
   clearErr();
@@ -1434,15 +1460,15 @@ function show(n, quiet){
 function check(from){
   var cs = st.prod >= 0 ? needCats() : [];
   if(from === 1 && st.region === null){
-    msg("지역을 선택해 주세요 (잘 모르겠다면 \"지역 무관\")", $("regs"));
+    msg("请选择首尔区域（不确定可选择“不限区域”）", $("regs"));
     return false;
   }
   if(from === 2 && (st.prod < 0 || cs.length === 0)){
-    msg("패키지 또는 단품을 선택해 주세요", $("prods"));
+    msg("请选择套餐或单项服务", $("prods"));
     return false;
   }
   if(from === 3 && !st.date){
-    msg("달력에서 희망 날짜 1일을 선택해 주세요", $("days"));
+    msg("请在日历中选择1天期望日期", $("days"));
     return false;
   }
   if(from === 4){
@@ -1454,7 +1480,7 @@ function check(from){
     if(miss.length){
       var block = $("storeSteps").querySelector('.store-cat-block[data-cat="' + miss[0] + '"]');
       var targetInp = block ? block.querySelector(".custom-store-input") : $("storeSteps");
-      msg(cat[miss[0]] + " 매장을 선택하거나 이름을 직접 적어 주세요", targetInp);
+      msg("请选择或填写“" + cat[miss[0]] + "”门店", targetInp);
       return false;
     }
   }
@@ -1462,7 +1488,7 @@ function check(from){
     for(var k = 0; k < cs.length; k++){
       var selEl = $("tt").querySelector('select[data-c="' + cs[k] + '"]');
       if(!st.times[cs[k]]){
-        msg(cat[cs[k]] + " 시간을 선택해 주세요 (모르겠다면 \"시간 무관\")", selEl);
+        msg("请选择“" + cat[cs[k]] + "”时间（不确定可选择“时间不限”）", selEl);
         return false;
       }
       var w = conflict(k);
@@ -1475,19 +1501,19 @@ function check(from){
   if(from === 6){
     var v = function(id){ return $(id).value.trim(); };
     if(!v("name")){
-      msg("대표자 이름을 입력해 주세요", $("name"));
+      msg("请填写代表人姓名", $("name"));
       return false;
     }
     if(!v("wechat")){
-      msg("위챗 ID를 입력해 주세요", $("wechat"));
+      msg("请填写微信号（WeChat ID）", $("wechat"));
       return false;
     }
     if(!v("email")){
-      msg("이메일을 입력해 주세요", $("email"));
+      msg("请填写电子邮箱", $("email"));
       return false;
     }
     if(!$("agree").checked){
-      msg("개인정보 수집·이용에 동의해 주세요", $("lblAgree"));
+      msg("请勾选同意收集并使用个人信息", $("lblAgree"));
       return false;
     }
   }
@@ -1516,13 +1542,13 @@ function finish(paid){
   $("code").textContent = codeStr;
   encodeStateToHash();
   $("doneSum").innerHTML = sumHtml(false);
-  $("doneTitle").textContent = paid ? "✓ 예약 신청과 결제 데모가 접수되었어요" : "✓ 예약 신청서가 접수되었어요";
+  $("doneTitle").textContent = paid ? "✓ 预约申请与定金演示已提交" : "✓ 预约申请已提交";
   show(8);
 }
 
 $("payBtn").onclick = function(){
   if(!$("agree2").checked){
-    msg("예약 변경 추가금 및 환불 페널티 규정에 동의해 주세요", $("lblAgree2"));
+    msg("请勾选同意预约变更附加费及退费扣款规则", $("lblAgree2"));
     return;
   }
   finish(true);
@@ -1531,14 +1557,14 @@ $("skipPay").onclick = function(){ finish(false); };
 
 $("topShareBtn").onclick = function(){
   var url = encodeStateToHash();
-  copyTextFallback(url, $("topShareBtn"), "현재 링크 복사", "✓ 링크 복사됨");
+  copyTextFallback(url, $("topShareBtn"), "复制当前链接", "✓ 已复制链接");
 };
 
 $("copyBtn").onclick = function(){
-  copyTextFallback(buildCopyText(), $("copyBtn"), "예약 요약 복사", "✓ 복사됨");
+  copyTextFallback(buildCopyText(), $("copyBtn"), "复制预约摘要", "✓ 已复制");
 };
 
-/* 추가예약: 선택한 지역·날짜와 대표자 연락처는 유지하고 새 상품/매장/시간을 이어서 예약 */
+// 新增预约：保留区域、日期与代表人联系信息，重新选择项目/门店/时间
 $("addBookingBtn").onclick = function(){
   st.prod = -1;
   st.chosen = {};
@@ -1555,13 +1581,11 @@ window.addEventListener("hashchange", function(){
   }
 });
 
-/* =====================================================================
-   예약 변경 · 매장 연락 패널 (상황 배너 + 실시간 번역)
-   ===================================================================== */
+// 상황별 긴급 연락 배너, 실시간 중·한 번역 및 직원 제시 화면 로직
 var OPS = {
   wechat: "kbeauty_ops_sample",
   qr: "",
-  hours: "한국시간 10:00–20:00 (샘플)"
+  hours: "北京时间/韩国时间 10:00–20:00（示例）"
 };
 var STORE_CONTACT = {};
 var KO_CAT = {color:"퍼스널컬러", hair:"헤어", makeup:"메이크업", photo:"사진 촬영"};
@@ -1573,7 +1597,7 @@ var hp = {
   min: 15,
   n: 2,
   newTime: "15:00",
-  allergyDetail: "민감성 피부 / 화장품·염모제 알레르기",
+  allergyDetail: "敏感肌 / 化妆品或染发剂过敏",
   customNote: ""
 };
 
@@ -1600,7 +1624,7 @@ function hpHead(c){
   }
   if(c) s += KO_CAT[c] + " ";
   s += "예약한 " + (name || "고객") + "입니다.";
-  if(st.shareCode) s += " (접수번호: " + st.shareCode + ")";
+  if(st.shareCode) s += " (예약번호: " + st.shareCode + ")";
   return s;
 }
 
@@ -1608,7 +1632,7 @@ var SITUATIONS = [
   {
     id: "late",
     icon: "⏰",
-    t: "지각",
+    t: "迟到",
     ko: function(h){
       var extra = hp.customNote.trim() ? " (" + hp.customNote.trim() + ")" : "";
       return h + " 약 " + hp.min + "분 정도 늦을 것 같습니다" + extra + ". 죄송하지만 그대로 진행이 가능할까요?";
@@ -1621,7 +1645,7 @@ var SITUATIONS = [
   {
     id: "change",
     icon: "🔄",
-    t: "시간 및 인원 변경",
+    t: "改时间及人数",
     ko: function(h){
       var extra = hp.customNote.trim() ? " (" + hp.customNote.trim() + ")" : "";
       return h + " 희망 시간을 " + hp.newTime + " 전후로, 인원은 " + hp.n + "명으로 변경하고 싶습니다" + extra + ". 변경 가능 여부와 추가금 안내 부탁드립니다.";
@@ -1634,7 +1658,7 @@ var SITUATIONS = [
   {
     id: "cancel",
     icon: "❌",
-    t: "예약취소",
+    t: "取消预约",
     ko: function(h){
       var extra = hp.customNote.trim() ? " (사유: " + hp.customNote.trim() + ")" : "";
       return h + " 부득이한 사정으로 예약을 취소하고 싶습니다" + extra + ". 불편을 드려 죄송하며, 취소 및 환불 규정을 안내해 주세요.";
@@ -1647,10 +1671,10 @@ var SITUATIONS = [
   {
     id: "allergy",
     icon: "⚠️",
-    t: "알레르기 안내",
+    t: "过敏提示",
     ko: function(h){
       var extra = hp.customNote.trim() ? " (" + hp.customNote.trim() + ")" : "";
-      return h + " " + hp.allergyDetail + "가 있습니다" + extra + ". 시술 전 사용 제품과 성분을 먼저 확인할 수 있을까요?";
+      return h + " 알레르기나 민감한 피부(" + hp.allergyDetail + ")가 있습니다" + extra + ". 시술 전 사용 제품과 성분을 먼저 확인할 수 있을까요?";
     },
     zh: function(){
       var extra = hp.customNote.trim() ? "（补充：" + hp.customNote.trim() + "）" : "";
@@ -1660,7 +1684,7 @@ var SITUATIONS = [
   {
     id: "lost",
     icon: "📍",
-    t: "매장을 못 찾겠어요",
+    t: "找不到门店",
     ko: function(h){
       var storeLabel = hp.cat ? storeWithAddr(hp.cat) : "매장";
       var extra = hp.customNote.trim() ? " (" + hp.customNote.trim() + ")" : "";
@@ -1686,29 +1710,29 @@ function ctxText(){
   var cs = needCats();
   var v = function(id){ return $(id) && $(id).value ? $(id).value.trim() : ""; };
   var lines = [
-    "접수번호: " + (st.shareCode || "(미제출)"),
-    "대표자: " + (v("name") || "-") + " / 위챗: " + (v("wechat") || "-"),
-    "희망 날짜: " + fd(st.date) + " / 인원: " + (v("ppl") || "1") + "명"
+    "申请编号：" + (st.shareCode || "（未提交）"),
+    "代表人：" + (v("name") || "-") + " / 微信：" + (v("wechat") || "-"),
+    "期望日期：" + fd(st.date) + " / 人数：" + (v("ppl") || "1") + "人"
   ];
   cs.forEach(function(c){
-    lines.push("- " + cat[c] + ": " + storeWithAddr(c) + " @ " + (st.times[c] === "any" ? "시간 무관" : (st.times[c] || "선택 안 함")));
+    lines.push("- " + cat[c] + "：" + storeWithAddr(c) + " @ " + (st.times[c] === "any" ? "时间不限" : (st.times[c] || "未选择")));
   });
   return lines.join("\n");
 }
 function relayText(s){
-  return "[변경/문의 요청 · 소통 대행 부탁드립니다]\n" + ctxText() + "\n\n상황: " + s.t + "\n한국어 문장: " + sitKo(s) + "\n중국어 번역: " + sitZh(s);
+  return "[预约变更/咨询 · 请求运营协助]\n" + ctxText() + "\n\n场景：" + s.t + "\n中文表达：" + sitZh(s) + "\n韩文表达：" + sitKo(s);
 }
 
 function contactHtml(i){
   var s = stores[i], ct = STORE_CONTACT[s.n] || {};
   var sample = !ct.wx;
   var wx = ct.wx || ("sample_mgr_" + String(i + 1).padStart(2, "0"));
-  var qr = ct.qr ? '<img class="qrimg" src="' + ct.qr + '" alt="담당자 위챗 QR">' : '<div class="qrph">담당자 위챗 QR<br>업로드 예정</div>';
+  var qr = ct.qr ? '<img class="qrimg" src="' + ct.qr + '" alt="门店负责人微信二维码">' : '<div class="qrph">负责人微信二维码<br>待上传</div>';
   return '<div class="uc pri"><h4>' + esc(s.n) + ' <small style="font-weight:400;color:var(--muted)">· ' + cat[s.c] + ' · ' + esc(s.addr) + '</small></h4>' +
-    '<div class="ct">' + qr + '<div class="ct-info"><div class="zh">매장 담당자 위챗 ID</div>' +
-    '<div class="idrow"><code>' + esc(wx) + '</code>' + (sample ? '<span class="samp">샘플</span>' : '') +
-    '<button type="button" class="mini" data-act="copyv" data-v="' + esc(wx) + '">복사</button></div>' +
-    '<div class="zh">연락 시 접수번호와 대표자 이름을 알려 주세요.</div></div></div></div>';
+    '<div class="ct">' + qr + '<div class="ct-info"><div class="zh">门店负责人微信号</div>' +
+    '<div class="idrow"><code>' + esc(wx) + '</code>' + (sample ? '<span class="samp">示例</span>' : '') +
+    '<button type="button" class="mini" data-act="copyv" data-v="' + esc(wx) + '">复制</button></div>' +
+    '<div class="zh">联系时请提供申请编号与代表人姓名。</div></div></div></div>';
 }
 
 function renderHp(){
@@ -1717,7 +1741,7 @@ function renderHp(){
 
   if(hp.tab === "cards"){
     var cs = needCats();
-    h += '<p class="hp-note">※ 일정·시간·인원 변경 시 추가금이 발생하거나 취소 시점에 따라 환불 페널티가 적용될 수 있습니다.</p>';
+    h += '<p class="hp-note">※ 修改时间或人数可能产生附加费，取消预约将按时间节点适用退费扣款规则。</p>';
 
     h += '<div class="banner-grid">';
     SITUATIONS.forEach(function(s){
@@ -1727,83 +1751,83 @@ function renderHp(){
     h += '</div>';
 
     var curSit = getSit();
-    h += '<div class="composer"><h4>' + curSit.icon + ' ' + curSit.t + ' 메시지 작성 및 실시간 번역</h4>';
+    h += '<div class="composer"><h4>' + curSit.icon + ' ' + curSit.t + ' 话术编辑与实时互译</h4>';
 
     if(cs.length){
-      h += '<div class="opt-row"><label>대상 서비스 <select id="hpCat">';
+      h += '<div class="opt-row"><label>对应项目 <select id="hpCat">';
       cs.forEach(function(c){
         h += '<option value="' + c + '"' + (hp.cat === c ? " selected" : "") + '>' + cat[c] + ' · ' + esc(sname(c)) + '</option>';
       });
-      h += '<option value=""' + (hp.cat === "" ? " selected" : "") + '>전체/지정 안 함</option></select></label></div>';
+      h += '<option value=""' + (hp.cat === "" ? " selected" : "") + '>全部/未指定</option></select></label></div>';
     }
 
     if(curSit.id === "late"){
-      h += '<div class="opt-row"><label>예상 지각 시간 <select id="hpMin">' +
-        [10,15,20,30,45].map(function(m){ return '<option value="' + m + '"' + (hp.min === m ? " selected" : "") + '>' + m + '분</option>'; }).join("") +
+      h += '<div class="opt-row"><label>预计迟到 <select id="hpMin">' +
+        [10,15,20,30,45].map(function(m){ return '<option value="' + m + '"' + (hp.min === m ? " selected" : "") + '>' + m + '分钟</option>'; }).join("") +
         '</select></label></div>';
     }
     if(curSit.id === "change"){
       h += '<div class="opt-row">' +
-        '<label>희망 시간 <select id="hpNewTime">' +
+        '<label>期望时间 <select id="hpNewTime">' +
         ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00"].map(function(t){
           return '<option value="' + t + '"' + (hp.newTime === t ? " selected" : "") + '>' + t + '</option>';
         }).join("") +
         '</select></label>' +
-        '<label>변경 인원 <select id="hpPpl">' +
+        '<label>变更人数 <select id="hpPpl">' +
         [1,2,3,4,5].map(function(n){
-          return '<option value="' + n + '"' + (hp.n === n ? " selected" : "") + '>' + n + '명</option>';
+          return '<option value="' + n + '"' + (hp.n === n ? " selected" : "") + '>' + n + '人</option>';
         }).join("") +
         '</select></label></div>';
     }
     if(curSit.id === "allergy"){
-      h += '<div class="opt-row"><label>알레르기 유형 <select id="hpAllergy">' +
-        ["민감성 피부 / 화장품·염모제 알레르기","금속·접착제 알레르기","향료·에센셜 오일 민감"].map(function(opt){
+      h += '<div class="opt-row"><label>过敏类型 <select id="hpAllergy">' +
+        ["敏感肌 / 化妆品或染发剂过敏","金属或胶水过敏","香精或精油敏感"].map(function(opt){
           return '<option value="' + esc(opt) + '"' + (hp.allergyDetail === opt ? " selected" : "") + '>' + esc(opt) + '</option>';
         }).join("") +
         '</select></label></div>';
     }
 
-    h += '<div class="opt-row" style="width:100%"><label style="width:100%">추가 메모/구체 내용 수정 <input type="text" id="hpCustom" value="' + esc(hp.customNote) + '" placeholder="예: 지하철 연착 중 / 2번 출구 앞 도착"></label></div>';
+    h += '<div class="opt-row" style="width:100%"><label style="width:100%">补充说明/修改内容 <input type="text" id="hpCustom" value="' + esc(hp.customNote) + '" placeholder="例如：地铁延误中 / 已到2号出口附近"></label></div>';
 
     h += '<div class="live-tr">' +
-      '<div style="font-size:12px;color:var(--muted)">실시간 한국어 문장</div>' +
+      '<div style="font-size:12px;color:var(--muted)">实时中文表达（简体中文）</div>' +
+      '<div class="zh" id="liveZh" style="margin-bottom:10px">' + esc(sitZh(curSit)) + '</div>' +
+      '<div style="font-size:12px;color:var(--muted)">实时韩文翻译（发送/出示给门店）</div>' +
       '<div class="ko" id="liveKo">' + esc(sitKo(curSit)) + '</div>' +
-      '<div style="font-size:12px;color:var(--muted)">실시간 중국어 번역 (简体中文)</div>' +
-      '<div class="zh" id="liveZh">' + esc(sitZh(curSit)) + '</div>' +
       '</div>';
 
     h += '<div class="acts">' +
-      '<button type="button" class="btn" style="padding:7px 14px;font-size:13px" data-act="show">👆 직원에게 보여주기</button>' +
-      '<button type="button" class="mini" data-act="copyko">한국어 복사</button>' +
-      '<button type="button" class="mini" data-act="copyzh">중국어 복사</button>' +
-      '<button type="button" class="mini" data-act="relay">운영팀에 보내기</button>' +
+      '<button type="button" class="btn" style="padding:7px 14px;font-size:13px" data-act="show">👆 出示给店员</button>' +
+      '<button type="button" class="mini" data-act="copyko">复制韩文</button>' +
+      '<button type="button" class="mini" data-act="copyzh">复制中文</button>' +
+      '<button type="button" class="mini" data-act="relay">发给运营团队</button>' +
       '</div></div>';
   }
 
   if(hp.tab === "ops"){
-    var qr = OPS.qr ? '<img class="qrimg" src="' + OPS.qr + '" alt="운영팀 위챗 QR">' : '<div class="qrph">운영팀 위챗 QR<br>업로드 예정</div>';
-    h += '<div class="uc pri"><h4>👩‍💼 운영팀 위챗 중계 (통역 대행)</h4>' +
-      '<div class="zh">매장과 소통이 어려울 때 운영팀이 고객과 매장 사이에서 통역·중계를 도와드려요. (운영시간: ' + esc(OPS.hours) + ')</div>' +
-      '<div class="ct" style="margin-top:10px">' + qr + '<div class="ct-info"><div class="zh">운영팀 위챗 ID</div>' +
-      '<div class="idrow"><code>' + esc(OPS.wechat) + '</code><span class="samp">샘플</span>' +
-      '<button type="button" class="mini" data-act="copyv" data-v="' + esc(OPS.wechat) + '">복사</button></div></div></div>' +
-      '<div class="acts"><button type="button" class="btn" data-act="opsgo">예약 정보 복사하고 위챗 열기</button></div>' +
-      '<p class="hp-note" style="margin-top:10px" id="opsStatus">누르면 예약 정보가 복사돼요. 위챗이 열리지 않으면 직접 위챗을 열어 붙여넣어 주세요.</p></div>';
+    var qr = OPS.qr ? '<img class="qrimg" src="' + OPS.qr + '" alt="运营团队微信二维码">' : '<div class="qrph">运营团队微信二维码<br>待上传</div>';
+    h += '<div class="uc pri"><h4>👩‍💼 运营团队微信协助（沟通代传）</h4>' +
+      '<div class="zh">与门店沟通不便时，运营团队可协助对接。（服务时间：' + esc(OPS.hours) + '）</div>' +
+      '<div class="ct" style="margin-top:10px">' + qr + '<div class="ct-info"><div class="zh">运营团队微信号</div>' +
+      '<div class="idrow"><code>' + esc(OPS.wechat) + '</code><span class="samp">示例</span>' +
+      '<button type="button" class="mini" data-act="copyv" data-v="' + esc(OPS.wechat) + '">复制</button></div></div></div>' +
+      '<div class="acts"><button type="button" class="btn" data-act="opsgo">复制预约信息并打开微信</button></div>' +
+      '<p class="hp-note" style="margin-top:10px" id="opsStatus">点击后会复制预约信息；若未自动拉起微信，请手动打开微信粘贴发送。</p></div>';
   }
 
   if(hp.tab === "store"){
     var cs2 = needCats(), shown = 0;
-    h += '<p class="hp-note">선택한 매장의 연락 정보예요. 소통이 어려우면 "운영팀 위챗 중계"를 이용해 주세요.</p>';
+    h += '<p class="hp-note">以下为所选门店联系参考；若需协助可切换至“运营团队微信协助”。</p>';
     cs2.forEach(function(c){
       var i = st.chosen[c], custom = (st.customStores[c] || "").trim();
       if(i !== undefined && i >= 0 && stores[i]){ h += contactHtml(i); shown++; }
       else if(custom){
-        h += '<div class="uc pri"><h4>' + esc(custom) + ' <small style="font-weight:400;color:var(--muted)">· ' + cat[c] + ' (직접 입력)</small></h4><div class="zh">직접 입력한 매장은 운영팀 위챗 중계를 통해 확인해 주세요.</div></div>';
+        h += '<div class="uc pri"><h4>' + esc(custom) + ' <small style="font-weight:400;color:var(--muted)">· ' + cat[c] + '（自定义填写）</small></h4><div class="zh">自定义填写门店请通过“运营团队微信协助”核实联系方式。</div></div>';
         shown++;
       }
     });
-    if(!shown) h += '<div class="uc pri"><div class="zh">아직 매장을 선택하지 않았어요. "④ 매장" 단계에서 매장을 고르면 여기에 표시돼요.</div></div>';
-    h += '<details><summary style="cursor:pointer;font-weight:500;font-size:14px;margin:8px 0">전체 제휴 매장 연락처 보기</summary>';
+    if(!shown) h += '<div class="uc pri"><div class="zh">尚未选择门店，完成“④ 门店”步骤后将在此显示。</div></div>';
+    h += '<details><summary style="cursor:pointer;font-weight:500;font-size:14px;margin:8px 0">查看全部合作门店参考</summary>';
     stores.forEach(function(x, i){ h += contactHtml(i); });
     h += '</details>';
   }
@@ -1864,23 +1888,23 @@ $("hpBody").addEventListener("click", function(e){
   if(!b) return;
   var a = b.dataset.act, s = getSit();
   if(a === "show") openShow(s);
-  if(a === "copyko") copyTextFallback(sitKo(s), b, "한국어 복사", "✓ 복사됨");
-  if(a === "copyzh") copyTextFallback(sitZh(s), b, "중국어 복사", "✓ 복사됨");
-  if(a === "copyv") copyTextFallback(b.dataset.v, b, "복사", "✓ 복사됨");
+  if(a === "copyko") copyTextFallback(sitKo(s), b, "复制韩文", "✓ 已复制");
+  if(a === "copyzh") copyTextFallback(sitZh(s), b, "复制中文", "✓ 已复制");
+  if(a === "copyv") copyTextFallback(b.dataset.v, b, "复制", "✓ 已复制");
   if(a === "relay"){
-    copyTextFallback(relayText(s), b, "운영팀에 보내기", "✓ 복사됨, 위챗 탭 이동");
+    copyTextFallback(relayText(s), b, "发给运营团队", "✓ 已复制，切至微信协助");
     setTimeout(function(){ hp.tab = "ops"; renderHp(); }, 700);
   }
   if(a === "opsgo"){
-    var text = "[예약 문의 · 소통 도움 요청]\n" + ctxText();
-    copyTextFallback(text, b, "예약 정보 복사하고 위챗 열기", "✓ 복사됨, 위챗 여는 중…");
+    var text = "[预约咨询 · 请求沟通协助]\n" + ctxText();
+    copyTextFallback(text, b, "复制预约信息并打开微信", "✓ 已复制，正在打开微信…");
     try { window.location.href = "weixin://"; } catch (err) {}
     var stEl = $("opsStatus");
-    if(stEl) stEl.textContent = "예약 정보를 복사했어요. 위챗이 자동으로 열리지 않으면 직접 열어 붙여넣어 주세요.";
+    if(stEl) stEl.textContent = "已复制预约信息；若未自动打开微信，请手动打开微信粘贴发送。";
   }
 });
 if($("openHelpDone")) $("openHelpDone").onclick = function(){ openHelp(); };
-if($("opsQrBox") && OPS.qr) $("opsQrBox").innerHTML = '<img class="qrimg" src="' + OPS.qr + '" alt="운영팀 위챗 QR">';
+if($("opsQrBox") && OPS.qr) $("opsQrBox").innerHTML = '<img class="qrimg" src="' + OPS.qr + '" alt="运营团队微信二维码">';
 
 var restored = decodeStateFromHash();
 show(restored ? st.step : 1, true);
